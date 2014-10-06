@@ -299,8 +299,8 @@ public class Simulator {
             // TODO
             Console.log("INT not supported yet.", "warning");
         } else if (inst.startsWith("11101") && inst.endsWith("11000000")) {       // JALR
-            PC = register[getRegIndex(inst.substring(5, 8))];
             RA = PC;
+            PC = register[getRegIndex(inst.substring(5, 8))];
         } else if (inst.startsWith("11101") && inst.endsWith("00000000")) {       // JR
             PC = register[getRegIndex(inst.substring(5, 8))];
         } else if (inst.startsWith("11101") && inst.endsWith("00100000")) {       // JRRA
