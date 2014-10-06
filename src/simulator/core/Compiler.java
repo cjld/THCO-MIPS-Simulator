@@ -155,7 +155,12 @@ public class Compiler {
             checkInstFormat(inst, 0);
             return "00001" + "00000000000";
         } else {
-            throw new NoSuchInstError(inst[0]);
+        	try {
+            	String ss = transImm(instruction, 16);
+            	return ss;
+        	} catch (Exception e) {
+                throw new NoSuchInstError(inst[0]);	
+        	}
         }
     }
 
@@ -169,6 +174,10 @@ public class Compiler {
             String line = lines[i];
             line = Misc.deleteComment(line);
             int colonPos = line.indexOf(':');
+            if (line.startsWith("\"") && line.endsWith("\"") && line.length() > 1) {
+            	line.replaceAll("\\\"", "\"");
+            	memoryPointer += line.length() - 1;
+            } else
             if (colonPos != -1) {
                 String label = line.substring(0, colonPos).trim();
                 if (label.matches("[\\w-]+")) {

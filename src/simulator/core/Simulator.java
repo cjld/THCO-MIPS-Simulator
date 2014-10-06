@@ -66,10 +66,21 @@ public class Simulator {
                 //Console.log("line " + (i + 1) + ":\t" + line);
                 if (!(line.matches("\\s*"))) {
                     try {
-                        memory.set(memoryPointer, Misc.encode(compiler.translate(line, memoryPointer)));
-                        lineNumMap.put(memoryPointer, i);
-                        //Console.log(memoryPointer + ":\t" + Misc.decode(memory.get(memoryPointer)), "info");
-                        memoryPointer++;
+                        if (line.startsWith("\"") && line.endsWith("\"") && line.length() > 1) {
+                        	for (int p=1; p<line.length(); p++) {
+                        		char c = line.charAt(p);
+                        		if (p == line.length()-1)
+                        			c = '\0';
+                        		memory.set(memoryPointer, Misc.encode(compiler.translate((int)c+"", memoryPointer)));
+                        		lineNumMap.put(memoryPointer, i);
+                        		memoryPointer++;
+                        	}
+                        } else {
+	                        memory.set(memoryPointer, Misc.encode(compiler.translate(line, memoryPointer)));
+	                        lineNumMap.put(memoryPointer, i);
+	                        //Console.log(memoryPointer + ":\t" + Misc.decode(memory.get(memoryPointer)), "info");
+	                        memoryPointer++;
+                        }
                     } catch (CompileError error) {
                         errorCount++;
                         Console.log("Compile Error in line " + (i + 1) + ": \t" + line, "error");
