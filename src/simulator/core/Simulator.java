@@ -316,7 +316,7 @@ public class Simulator {
         } else if (inst.startsWith("11101") && inst.endsWith("01000000")) {       // MFPC
             register[getRegIndex(inst.substring(5, 8))] = PC;
         } else if (inst.startsWith("01100111")) {       // MOVE
-            register[getRegIndex(inst.substring(13, 16))] = register[getRegIndex(inst.substring(8, 11))];
+            register[getRegIndex(inst.substring(8, 11))] = register[getRegIndex(inst.substring(13, 16))];
         } else if (inst.startsWith("11110") && inst.endsWith("00000001")) {       // MTIH
             IH = register[getRegIndex(inst.substring(5, 8))];
         } else if (inst.startsWith("01100100")) {       // MTSP
