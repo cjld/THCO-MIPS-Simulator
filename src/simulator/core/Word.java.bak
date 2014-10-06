@@ -1,0 +1,51 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package simulator.core;
+
+/**
+ *
+ * @author LeeThree
+ */
+public class Word {
+
+    public Word(String immediate) {
+        if (immediate.endsWith("h") || immediate.endsWith("H")) {
+            immediate = "0x" + immediate.substring(0, immediate.length() - 1);
+        }
+        int i = Integer.decode(immediate);
+        h = (byte) ((i & 65280) >> 8);
+        l = (byte) (i & 255);
+    }
+
+    public int code() {
+        return h << 8 + l;
+    }
+
+    public void assign(Word w) {
+        this.h = w.h;
+        this.l = w.l;
+    }
+
+    @Override
+    public String toString() {
+        int h1 = (h & 240) >> 4;
+        int h2 = h & 15;
+        int l1 = (l & 240) >> 4;
+        int l2 = l & 15;
+        return Integer.toHexString(h1) + Integer.toHexString(h2) + "-" + Integer.toHexString(l1) + Integer.toHexString(l2);
+    }
+
+    public static Word add(Word a, Word b) {
+        Word result = new Word();
+        result.l = (byte) (a.l + b.l);
+        result.h = (byte) (a.h + b.h + (a.l + b.l) >> 8);
+        System.out.println(a.l + b.l);
+        return result;
+    }
+
+    private Word() {
+    }
+    private short s;
+}
