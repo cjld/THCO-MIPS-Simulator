@@ -306,11 +306,11 @@ public class Simulator {
         } else if (inst.startsWith("11101") && inst.endsWith("00100000")) {       // JRRA
             PC = RA;
         } else if (inst.startsWith("01101")) {       // LI
-            register[getRegIndex(inst.substring(5, 8))] = Misc.signExtend(inst.substring(8));
+            register[getRegIndex(inst.substring(5, 8))] = Misc.zeroExtend(inst.substring(8));
         } else if (inst.startsWith("10011")) {       // LW
-            register[getRegIndex(inst.substring(8, 11))] = memory.load((short) (register[getRegIndex(inst.substring(5, 8))] + Misc.zeroExtend(inst.substring(11))));
+            register[getRegIndex(inst.substring(8, 11))] = memory.load((short) (register[getRegIndex(inst.substring(5, 8))] + Misc.signExtend(inst.substring(11))));
         } else if (inst.startsWith("10010")) {       // LW-SP
-            register[getRegIndex(inst.substring(5, 8))] = memory.load((short) (SP + Misc.zeroExtend(inst.substring(8))));
+            register[getRegIndex(inst.substring(5, 8))] = memory.load((short) (SP + Misc.signExtend(inst.substring(8))));
         } else if (inst.startsWith("11110") && inst.endsWith("00000000")) {       // MFIH
             register[getRegIndex(inst.substring(5, 8))] = IH;
         } else if (inst.startsWith("11101") && inst.endsWith("01000000")) {       // MFPC
@@ -370,11 +370,11 @@ public class Simulator {
         } else if (inst.startsWith("11100") && inst.endsWith("11")) {       // SUBU
             register[getRegIndex(inst.substring(11, 14))] = (short) (register[getRegIndex(inst.substring(5, 8))] - register[getRegIndex(inst.substring(8, 11))]);
         } else if (inst.startsWith("11011")) {       // SW
-            memory.store((short) (register[getRegIndex(inst.substring(5, 8))] + Misc.zeroExtend(inst.substring(11))), register[getRegIndex(inst.substring(8, 11))]);
+            memory.store((short) (register[getRegIndex(inst.substring(5, 8))] + Misc.signExtend(inst.substring(11))), register[getRegIndex(inst.substring(8, 11))]);
         } else if (inst.startsWith("01100010")) {       // SW-RS
-            memory.store((short) (SP + Misc.zeroExtend(inst.substring(8))), RA);
+            memory.store((short) (SP + Misc.signExtend(inst.substring(8))), RA);
         } else if (inst.startsWith("11010")) {       // SW-SP
-            memory.store((short) (SP + Misc.zeroExtend(inst.substring(8))), register[getRegIndex(inst.substring(5, 8))]);
+            memory.store((short) (SP + Misc.signExtend(inst.substring(8))), register[getRegIndex(inst.substring(5, 8))]);
         } else if (inst.startsWith("11101") && inst.endsWith("01110")) {       // XOR
             register[getRegIndex(inst.substring(5, 8))] ^= register[getRegIndex(inst.substring(8, 11))];
         } else if (inst.startsWith("00001")) {       // NOP
