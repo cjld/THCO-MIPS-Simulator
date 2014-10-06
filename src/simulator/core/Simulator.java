@@ -54,6 +54,7 @@ public class Simulator {
         short memoryPointer = 0;
         int errorCount = 0;
         PC = 0;
+        SP = MemoryIO.SP_ADDR;
         Console.clear();
         Console.log("Start compiling...", "info");
         lineNumMap.clear();
@@ -103,6 +104,7 @@ public class Simulator {
         short currentInst = 0x0800;
         if (!running) {
             PC = 0;
+            SP = MemoryIO.SP_ADDR;
             running = true;
             Console.clear();
             Console.log("Running program...", "info");
@@ -143,6 +145,7 @@ public class Simulator {
         try {
             if (!running) {
                 PC = 0;
+                SP = MemoryIO.SP_ADDR;
                 running = true;
                 Console.clear();
                 Console.log("Running program...", "info");
@@ -350,7 +353,7 @@ public class Simulator {
             } else {
                 T = 0;
             }
-        } else if (inst.startsWith("11101") && inst.endsWith("00011")) {       // SLTUI
+        } else if (inst.startsWith("01011") && inst.endsWith("")) {       // SLTUI
             if (Misc.unsignedLess(register[getRegIndex(inst.substring(5, 8))], Misc.zeroExtend(inst.substring(8)))) {
                 T = 1;
             } else {

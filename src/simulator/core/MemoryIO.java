@@ -12,17 +12,19 @@ public class MemoryIO {
     public MemoryIO() {
         this.memory = new short[MAX_ADDR];
     }
+    
+    int convert(short addr) {return addr >= 0 ? (int)addr : ((int)addr) + 0x10000;}
 
     public short load(short addr) throws MemAccessViolationError {
-        if (addr == 0x6000) {
+        if (addr == IO_ADDR) {
             short s = (short) Terminal.getInput();
             //System.out.println("get:" + s);
             return s;
-        } else if (addr < 0x4000 && addr > 0x27FF) {
+        } else if (false) {//if (addr < 0x4000 && addr > 0x27FF) {
             throw new MemAccessViolationError(addr);
         } {
             try {
-                return memory[addr];
+                return memory[convert(addr)];
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new MemAccessViolationError(addr);
             }
@@ -30,14 +32,14 @@ public class MemoryIO {
     }
 
     public void store(short addr, short data) throws MemAccessViolationError {
-        if (addr == 0x6002) {
+        if (addr == IO_ADDR) {
             //System.out.print("print:" + (char) (data & 0xFF));
             Terminal.output((char) (data & 0xFF));
-        } else if (addr < 0x4000) {
+        } else if (false) {//if (addr < 0x4000) {
             throw new MemAccessViolationError(addr);
         } else {
             try {
-                memory[addr] = data;
+                memory[convert(addr)] = data;
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new MemAccessViolationError(addr);
             }
@@ -66,7 +68,9 @@ public class MemoryIO {
     public void stop(short PC) {
         Terminal.showMessage("\n> Program stopped at " + PC + ".\n");
     }
-    public static final int MAX_ADDR = 0x6004;
+    public static final int MAX_ADDR = 0x10000;
+    public static final short IO_ADDR = (short) 0xBF00;
+    public static final short SP_ADDR = (short) 0xBFFF;
     private short memory[];
     //private Terminal term;
 }

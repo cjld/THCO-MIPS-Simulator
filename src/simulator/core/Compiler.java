@@ -229,7 +229,9 @@ public class Compiler {
         }
     }
 
-    private String transImm(String immediate, int immLength) throws BadImmFormatError, ImmTooLargeError {
+    private String transImm(String immediate, int immLength) 
+    		throws BadImmFormatError, ImmTooLargeError, UndefinedLabelError, LabelTooFarAwayError 
+    {
         String imm = new String(immediate);
         if (imm.endsWith("h")) {
             if (imm.startsWith("-")) {
@@ -242,7 +244,24 @@ public class Compiler {
         try {
             s = Integer.decode(imm);
         } catch (NumberFormatException ex) {
-            throw new BadImmFormatError(immediate);
+        	if (!imm.startsWith("_"))
+        		throw new BadImmFormatError(imm);
+        	imm = imm.substring(1);
+            Short labelPos = labelTable.get(imm);
+            if (labelPos == null) {
+                throw new UndefinedLabelError(imm);
+            } else {
+                try {
+                    //Console.log(labelPos + "-" + instPtr + "-1");
+                    Console.log("Label: \"" + imm + "\"\t converted into " + (labelPos) + ".");
+                    return transImm(Integer.toString(labelPos), immLength);
+                } catch (BadImmFormatError error) {
+                    Console.log("Something impossible occurs!", "error");
+                    throw new LabelTooFarAwayError(imm);
+                } catch (ImmTooLargeError error) {
+                    throw new LabelTooFarAwayError(imm);
+                }
+            }
         }
         if (s > (1 << immLength) - 1 || s < -(1 << immLength - 1) + 1) {          // TODO: warning
             throw new ImmTooLargeError(s, (1 << immLength) - 1, -(1 << immLength - 1) + 1);
