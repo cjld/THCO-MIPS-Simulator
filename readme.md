@@ -5,6 +5,8 @@
 
 使用方法以及新添加的功能见 `doc/`
 
+编译运行见 `release/`
+
 原作者 : 
 	计63 李思锐 leethree9@gmail.com
 
