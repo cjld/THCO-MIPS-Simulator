@@ -21,6 +21,7 @@ https://groups.google.com/forum/?hl=zh-CN#!forum/thco-mips-simulator
 
 ## TODO
 
+*	指令规范文档撰写
 *	mips伪指令支持
 *	term支持
 *	中断支持
