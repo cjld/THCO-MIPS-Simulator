@@ -253,9 +253,6 @@ public class Compiler {
         try {
             s = Integer.decode(imm);
         } catch (NumberFormatException ex) {
-        	if (!imm.startsWith("_"))
-        		throw new BadImmFormatError(imm);
-        	imm = imm.substring(1);
             Short labelPos = labelTable.get(imm);
             if (labelPos == null) {
                 throw new UndefinedLabelError(imm);
@@ -279,27 +276,31 @@ public class Compiler {
         }
     }
 
-    private String transLabel(String label, int immLength) throws ImmTooLargeError, UndefinedLabelError, LabelTooFarAwayError {
-        try {
-            return transImm(label, immLength);
-        } catch (BadImmFormatError ex) {
-            Short labelPos = labelTable.get(label);
-            if (labelPos == null) {
-                throw new UndefinedLabelError(label);
-            } else {
-                try {
-                    //Console.log(labelPos + "-" + instPtr + "-1");
-                    Console.log("Label: \"" + label + "\"\t converted into " + (labelPos - instPtr - 1) + ".");
-                    return transImm(Integer.toString(labelPos - instPtr - 1), immLength);
-                } catch (BadImmFormatError error) {
-                    Console.log("Something impossible occurs!", "error");
-                    throw new LabelTooFarAwayError(label);
-                } catch (ImmTooLargeError error) {
-                    throw new LabelTooFarAwayError(label);
-                }
-            }
-        }
-    }
+	private String transLabel(String label, int immLength)
+			throws ImmTooLargeError, UndefinedLabelError, LabelTooFarAwayError
+	{
+		Short labelPos = labelTable.get(label);
+		if (labelPos == null) {
+			try {
+				return transImm(label, immLength);
+			} catch (Exception e) {
+				throw new UndefinedLabelError(label);
+			}
+		} else {
+			try {
+				// Console.log(labelPos + "-" + instPtr + "-1");
+				Console.log("Label: \"" + label + "\"\t converted into "
+						+ (labelPos - instPtr - 1) + ".");
+				return transImm(Integer.toString(labelPos - instPtr - 1),
+						immLength);
+			} catch (BadImmFormatError error) {
+				Console.log("Something impossible occurs!", "error");
+				throw new LabelTooFarAwayError(label);
+			} catch (ImmTooLargeError error) {
+				throw new LabelTooFarAwayError(label);
+			}
+		}
+	}
 
     private void checkInstFormat(String[] inst, int paraNum) throws BadInstFormatError {
         if (inst.length != paraNum + 1) {
