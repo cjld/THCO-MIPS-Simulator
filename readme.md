@@ -3,6 +3,8 @@
 此项目用于模拟一个MIPS指令集的子集, THCO-MIPS,此指令集用于清华计算机组成原理课使用
 此项目采用 MIT 协议, 详见 `LICENSE`
 
+使用方法以及新添加的功能见 `doc/`
+
 原作者 : 
 	计63 李思锐 leethree9@gmail.com
 
