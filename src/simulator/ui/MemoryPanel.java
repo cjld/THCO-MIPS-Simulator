@@ -6,11 +6,14 @@
 package simulator.ui;
 
 import java.awt.Font;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import org.jdesktop.application.Action;
+
 import simulator.core.MemoryIO;
 import simulator.core.Misc;
 
@@ -43,7 +46,7 @@ public class MemoryPanel extends javax.swing.JPanel {
     @Action
     public void inspect() {
         try {
-            addr = Short.decode(addrField.getText());
+            addr = Integer.decode(addrField.getText());
             offset = Math.min(Integer.decode(offsetField.getText()), MemoryIO.MAX_ADDR - addr);
             memoryTableModel.fireTableDataChanged();
         } catch (NumberFormatException ex) {
@@ -137,7 +140,7 @@ public class MemoryPanel extends javax.swing.JPanel {
     private javax.swing.JLabel offsetLabel;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
-    private short addr;
+    private Integer addr;
     private int offset;
     private UIConfig config;
     private MemoryTableModel memoryTableModel = new MemoryTableModel();
@@ -162,7 +165,7 @@ public class MemoryPanel extends javax.swing.JPanel {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            short rowAddr = (short) (addr + rowIndex);
+            int rowAddr = (int) (addr + rowIndex);
             try {
                 switch (columnIndex) {
                     case 0:

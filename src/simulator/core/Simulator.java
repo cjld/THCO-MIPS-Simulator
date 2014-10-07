@@ -194,7 +194,7 @@ public class Simulator {
     public String getBinaryCode() {
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < lineNumMap.size(); i++) {
-            buffer.append(Misc.decode(memory.get((short) i))+"\n");
+            buffer.append(Misc.decode(memory.get(i))+"\n");
         }
         return buffer.toString();
     }
@@ -238,7 +238,7 @@ public class Simulator {
                 if (rowIndex == getRowCount() - 1) {
                     switch (columnIndex) {
                         case 2:
-                            return Misc.decode(memory.get((short) rowIndex));
+                            return Misc.decode(memory.get(rowIndex));
                         case 3:
                             return rowIndex;
                         default:

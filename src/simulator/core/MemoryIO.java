@@ -46,12 +46,19 @@ public class MemoryIO {
         }
     }
 
-    public short get(short addr) throws ArrayIndexOutOfBoundsException {
+    public short get(int addr) throws ArrayIndexOutOfBoundsException {
         return memory[addr];
     }
+    
+    public short get(short addr) throws ArrayIndexOutOfBoundsException {
+        return get(convert(addr));
+    }
 
-    public void set(short addr, short data) throws ArrayIndexOutOfBoundsException {
+    public void set(int addr, short data) throws ArrayIndexOutOfBoundsException {
         memory[addr] = data;
+    }
+    public void set(short addr, short data) throws ArrayIndexOutOfBoundsException {
+        set(convert(addr), data);
     }
 
     public void init(short PC) {
