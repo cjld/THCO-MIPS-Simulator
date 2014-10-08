@@ -179,7 +179,7 @@ public class Compiler {
             	memoryPointer += line.length() - 1;
             } else
             if (colonPos != -1) {
-                String label = line.substring(0, colonPos).trim();
+                String label = line.substring(0, colonPos).trim().toLowerCase();
                 if (label.matches("[\\w-]+")) {
                     if (!labelTable.containsKey(label)) {
                         labelTable.put(label, memoryPointer);

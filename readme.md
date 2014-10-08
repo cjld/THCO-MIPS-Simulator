@@ -30,6 +30,7 @@ https://groups.google.com/forum/?hl=zh-CN#!forum/thco-mips-simulator
 *	term支持
 *	中断支持
 *	debug界面优化
+	*	跳到运行行
 *	debug功能增强
 	*	修改变量, 内存, 寄存器
 	*	运行指令支持
