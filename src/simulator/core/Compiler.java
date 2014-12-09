@@ -90,7 +90,7 @@ public class Compiler {
             return "11101" + transReg(inst[1]) + "01000000";
         } else if (inst[0].equals("move")) {
             checkInstFormat(inst, 2);
-            return "01100" + "111" + transReg(inst[1]) + "00" + transReg(inst[2]);
+            return "01111" + transReg(inst[1]) + transReg(inst[2]) + "00000";
         } else if (inst[0].equals("mtih")) {
             checkInstFormat(inst, 1);
             return "11110" + transReg(inst[1]) + "00000001";
